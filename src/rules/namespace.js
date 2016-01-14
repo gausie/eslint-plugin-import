@@ -82,7 +82,12 @@ module.exports = function (context) {
         context.report( dereference.property
                       , message(dereference.property, dereference.object)
                       )
+        return
       }
+
+      // go deep
+      // todo: while property is namespace and parent is member expression, keep validating
+      // if (!dereference.parent.type === 'MemberExpression') return
     },
 
     'VariableDeclarator': function ({ id, init }) {
