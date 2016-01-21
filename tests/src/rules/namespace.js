@@ -6,7 +6,7 @@ var ruleTester = new RuleTester({ env: { es6: true }})
 
 
 function error(name, namespace) {
-  return { message: `'${name}' not found in imported namespace ${namespace}.` }
+  return { message: `'${name}' not found in imported namespace '${namespace}'.` }
 }
 
 
@@ -125,11 +125,11 @@ ruleTester.run('namespace', rule, {
     ///////////////////////
     test({
       code: 'import * as a from "./deep/a"; console.log(a.b.e)',
-      errors: [ "'e' not found in deeply imported namespace b from ./deep/b.js." ],
+      errors: [ "'e' not found in deeply imported namespace 'a.b'." ],
     }),
     test({
       code: 'import * as a from "./deep/a"; console.log(a.b.c.e)',
-      errors: [ "'e' not found in deeply imported namespace c from ./deep/c.js." ],
+      errors: [ "'e' not found in deeply imported namespace 'a.b.c'." ],
     }),
   ],
 })

@@ -126,7 +126,7 @@ export default class ExportMap {
     if (n.type === 'ImportDeclaration') {
       let ns
       if (n.specifiers.some(s => s.type === 'ImportNamespaceSpecifier' && (ns = s))) {
-        namespaces.set(ns.local, ns)
+        namespaces.set(ns.local.name, n)
       }
     }
     if (n.type !== 'ExportNamedDeclaration') return
@@ -155,8 +155,8 @@ export default class ExportMap {
       if (s.type === 'ExportDefaultSpecifier') {
         // don't add it if it is not present in the exported module
         if (!remoteMap || !remoteMap.hasDefault) return
-      } else if (s.type === 'ExportSpecifier' && namespaces.has(s.local)){
-        let namespace = this.resolveReExport(namespaces.get(s.local), path)
+      } else if (s.type === 'ExportSpecifier' && namespaces.has(s.local.name)){
+        let namespace = this.resolveReExport(namespaces.get(s.local.name), path)
         if (namespace) type = namespace.named
       }
 
